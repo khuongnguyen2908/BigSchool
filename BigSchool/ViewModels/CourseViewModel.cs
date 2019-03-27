@@ -9,12 +9,12 @@ namespace BigSchool.ViewModels
 {
     public class CourseViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Khong duoc de trong")]
         public string Place { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Khong duoc de trong")]
         [FutureDate]
         public string Date { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Khong duoc de trong")]
         [ValidTime]
         public string Time { get; set; }
         [Required]
