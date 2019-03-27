@@ -17,7 +17,7 @@ namespace BigSchool.Controllers
             _dbContext = new ApplicationDbContext();
         }
         // GET: Courses
-        
+
         public ActionResult Create()
         {
             var viewModel = new CourseViewModel
@@ -25,7 +25,7 @@ namespace BigSchool.Controllers
                 Categories = _dbContext.Categories.ToList()
             };
             return View(viewModel);
-        
+        }
         [Authorize]
         [HttpPost]
         public ActionResult Create(CourseViewModel viewModel)
