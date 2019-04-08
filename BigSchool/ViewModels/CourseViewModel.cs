@@ -9,20 +9,25 @@ namespace BigSchool.ViewModels
 {
     public class CourseViewModel
     {
-        [Required(ErrorMessage = "Khong duoc de trong")]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Not be empty")]
         public string Place { get; set; }
-        [Required(ErrorMessage ="Khong duoc de trong")]
-        [FutureDate]
+
+        [Required(ErrorMessage = "Not be empty")]
+        [FutureDate(ErrorMessage = "Định dạng ngày sai")]
         public string Date { get; set; }
-        [Required(ErrorMessage = "Khong duoc de trong")]
-        [ValidTime]
+
+        [ValidTime(ErrorMessage = "Định dạng giờ sai")]
+        [Required(ErrorMessage = "Not be empty")]
         public string Time { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Not be empty")]
         public byte Category { get; set; }
         public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<Course> UpcommingCourses { get; set; }
-        public bool ShowAction { get; set; }
-        public DateTime GetDateTime()
+        public string Heading { get; set; }
+        public string Action { get { return (Id != 0) ? "Update" : "Create"; } }
+        public DateTime GetDatetime()
         {
             return DateTime.Parse(string.Format("{0} {1}", Date, Time));
         }
