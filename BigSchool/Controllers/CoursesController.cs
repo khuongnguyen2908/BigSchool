@@ -100,8 +100,8 @@ namespace BigSchool.Controllers
             var courses = _dbContext.Attendances
                 .Where(a => a.AttendeeId == userId)
                 .Select(a => a.Course)
-                .Include(a => a.Lecturer)
-                .Include(a => a.Category)
+                .Include(l => l.Lecturer)
+                .Include(l => l.Category)
                 .ToList();
 
             var viewModel = new CoursesViewModel
