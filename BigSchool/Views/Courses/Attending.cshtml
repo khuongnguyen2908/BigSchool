@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Attending</h2>
+<h2>Khóa học tham gia</h2>
 <ul class="course">
     @foreach (var course in Model.UpcomingCourses)
     {
@@ -28,6 +28,7 @@
                 <span class="category">
                     @course.Category.Name
                 </span>
+                <a href="#" class="btn btn-default btn-sm js-toggle-cancel" data-user-id="@course.CategoryId">cancel</a>
 
             </div>
         </li>
@@ -60,6 +61,25 @@
                         alert("Something failed");
                     });
             });
+    $(".js-toggle-cancel").click(function (e) {
+        e.preventDefault();
+        var link = $(e.target);
+        bootbox.confirm("Are you sure to cancel?",
+            function () {
+                $.ajax({
+                    url: "/api/delete/" + link.attr("data-course-id"),
+                    method: "DELETE"
+                })
+                    .done(function () {
+                        link.parent("li").fadeOut(function () {
+                            $(this).remove();
+                        })
+                    })
+                    .fail(function () {
+                        alert("Something failed!");
+                    });
+            });
+    });
         });</script>
 }
 

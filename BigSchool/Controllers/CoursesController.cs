@@ -90,7 +90,7 @@ namespace BigSchool.Controllers
             };
             _dbContext.Courses.Add(course);
             _dbContext.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Mine", "Courses");
         }
         [Authorize]
         public ActionResult Attending()
@@ -100,8 +100,8 @@ namespace BigSchool.Controllers
             var courses = _dbContext.Attendances
                 .Where(a => a.AttendeeId == userId)
                 .Select(a => a.Course)
-                .Include(l => l.Lecturer)
-                .Include(l => l.Category)
+                .Include(a => a.Lecturer)
+                .Include(a => a.Category)
                 .ToList();
 
             var viewModel = new CoursesViewModel
@@ -121,6 +121,20 @@ namespace BigSchool.Controllers
                 .Where(c => c.LecturerID == userId && c.DateTime > DateTime.Now)
                 .Include(l => l.Lecturer)
                 .Include(c => c.Category)
+                .ToList();
+
+            return View(courses);
+        }
+
+        [Authorize]
+        public ActionResult Following()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var courses = _dbContext.Followings
+                .Where(c => c.FollowerId == userId)
+                .Include(l => l.Followee)
+                .Include(c => c.Follower)
                 .ToList();
 
             return View(courses);
